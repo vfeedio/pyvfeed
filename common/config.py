@@ -2,11 +2,6 @@
 # API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
 # Copyright (C) 2013 - 2018 vFeed IO
 
-
-vfeed = {"title": 'Python API For vFeed Enterprise & Pro',
-         "email": 'support@vfeed.io',
-         "build": 'Beta 0.9'}
-
 database = {"file": 'vfeed.db',
             "path": 'YOUR_DB_PATH',
             }

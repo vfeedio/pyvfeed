@@ -7,6 +7,7 @@ import json
 from lib.Database import Database
 from common import utils as utility
 
+
 class Risk(object):
     def __init__(self, id):
         """ init """

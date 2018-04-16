@@ -19,6 +19,10 @@ class Database(object):
             print(utility.serialize_data(response))
             sys.exit()
 
+        # case CVE lower
+        if "cve" in identifier:
+            identifier = identifier.upper()
+
         self.identifier = identifier
         self.cur = cursor
         self.query = query

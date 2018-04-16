@@ -2,22 +2,15 @@
 # API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
 # Copyright (C) 2013 - 2018 vFeed IO
 
+
 import os
-import sys
+import yaml
 import json
 import shutil
 import hashlib
 
 from common import config as cfg
-from common import utils as utility
 
-try:
-    import yaml
-
-except ImportError as e:
-    module = str(e).split("'")
-    response = utility.serialize_error(False, module[1], module[0])
-    sys.exit(response)
 
 def init():
     """ init test """

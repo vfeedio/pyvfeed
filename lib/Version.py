@@ -3,14 +3,16 @@
 # Copyright (C) 2013 - 2018 vFeed IO
 
 import json
+from common import __version__, __title__, __email__
 from common import config as cfg
 
 
 class APIversion(object):
     def __init__(self):
-        self.title = json.dumps({'title': cfg.vfeed["title"]}, sort_keys=True, indent=2)
-        self.build = json.dumps({'build': cfg.vfeed["build"]}, sort_keys=True, indent=2)
-        self.email = json.dumps({'support': cfg.vfeed["email"]}, sort_keys=True, indent=2)
+
+        self.title = json.dumps({'title': __title__}, sort_keys=True, indent=2)
+        self.build = json.dumps({'build': __version__}, sort_keys=True, indent=2)
+        self.email = json.dumps({'support': __email__}, sort_keys=True, indent=2)
 
     def api_title(self):
         """ return API title """

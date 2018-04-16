@@ -85,7 +85,7 @@ class Preventive(object):
             url = data[i][3]
 
             # formatting the response
-            response = {"id": sig_id, "parameters": {"family": type, "url": url}}
+            response = {"id": sig_id, "parameters": {"class": type, "url": url}}
             signatures.append(response)
 
         return utility.check_list_data(signatures)
@@ -146,7 +146,7 @@ class Detective(object):
 
             # formatting the response
             response = {"id": sig_id,
-                        "parameters": {"family": family, "title": title, "url": url}}
+                        "parameters": {"class": family, "title": title, "url": url}}
             signatures.append(response)
 
         return utility.check_list_data(signatures)

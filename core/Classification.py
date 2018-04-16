@@ -126,9 +126,7 @@ class Classification(object):
                 attack_id = data[0][2]
 
                 # formatting the response
-                response = {
-                    capec_id: {"parameters": {"title": title, "attack_id": attack_id, "url": url}}}
-
+                response = {"id": capec_id, "parameters": {"title": title, "attack_id": attack_id, "url": url}}
                 capec_list.append(response)
 
         return utility.check_list_data(capec_list)
@@ -152,9 +150,7 @@ class Classification(object):
             url = data[i][2]
 
             # formatting the response
-            response = {
-                title: {"parameters": {"id": wasc_id, "url": url}}}
-
+            response = {"id": wasc_id, "parameters": {"title": title, "url": url}}
             wasc_list.append(response)
 
         return utility.check_list_data(wasc_list)
@@ -178,7 +174,8 @@ class Classification(object):
             # listing only categories for the exact CWE id
             if self.cwe_id in relations:
                 # formatting the response
-                response = {title: {"parameters": {"id": category_id, "url": url}}}
+                response = {"id": category_id, "parameters": {"title": title, "url": url}}
+
                 category_list.append(response)
 
         return utility.check_list_data(category_list)

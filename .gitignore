@@ -1,0 +1,6 @@
+*.pyc
+*.db
+.idea/
+
+# file with custom confs: keys, repos..
+common/config.py

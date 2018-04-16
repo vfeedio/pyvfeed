@@ -24,8 +24,8 @@ class Information(object):
 
         for data in self.cur.fetchall():
             # formatting the response
-            response = {"id": self.id, "published": data[1], "modified": data[2],
-                        "summary": data[3]}
+            response = {"id": self.id, "parameters": {"published": data[1], "modified": data[2],
+                        "summary": data[3]}}
             info.append(response)
 
         # adding the appropriate tag.

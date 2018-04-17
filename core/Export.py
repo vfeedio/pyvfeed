@@ -52,9 +52,3 @@ class Export(object):
 
         # create yaml file
         utility.create_yaml(self.load_data(), self.yaml_file)
-
-    def dump_csv(self):
-        """ callable method - export to CSV  """
-
-        # create csv file
-        utility.create_yaml(self.load_data(), self.yaml_file)

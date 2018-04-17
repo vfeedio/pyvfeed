@@ -19,12 +19,15 @@ print(info)
 info = json.loads(info)
 
 # Access to key values.
-for i in range(0, len(info['description'])):
-    print(info['description'][i]['id'])
-    print(info['description'][i]['summary'])
-
-# or set directly i as 0. Because there is anyway 1 entry. But better use previous method
-print(info['description'][0]['id'])
+for key in info['description']:
+    for source in key:
+        values = key[source]
+        if "id" in source:
+            print(values)
+        if "parameters" in source:
+            print(values['published'])
+            print(values['modified'])
+            print(values['summary'])
 
 # now we load the references
 reference = Information(cve).get_references()
@@ -54,14 +57,12 @@ for i in range(0, len(targets['targets'])):
         print(targets['targets'][i]['cpe2.2'])
         print(targets['targets'][i]['cpe2.3'])
 
-
 # loading a vulnerability weakeness
 weaknesses = Classification(cve).get_weaknesses()
 print(weaknesses)
 
-
 # loading a vulnerability exploits
-from core.Export import Exploitation
+from core.Exploitation import Exploitation
 
 cve = "CVE-2017-0199"
 
@@ -87,29 +88,32 @@ for key in data['exploitation']:
 
 # Enumerating only preventive info (patches, bugs, fixes ....)
 from core.Defense import Preventive
+
 cve = "CVE-2017-5638"
 advisory = Preventive(cve).get_advisory()
 print(advisory)
 
-
 # Listing only detectinve (IPS, IDS rules + other cool sources)
 from core.Defense import Detective
+
 cve = "CVE-2017-5638"
 rules = Detective(cve).get_rules()
 print(rules)
 
 # Now lets do both
 from core.Defense import Defense
+
 cve = "CVE-2017-5638"
 defense_data = Defense(cve).get_all()
 print(defense_data)
 
-
 # exporting to json
 cve = "CVE-2017-0199"
 from core.Export import Export
+
 Export(cve).dump_json()
 
 # updating the database
 from lib.Update import Update
+
 Update().update()

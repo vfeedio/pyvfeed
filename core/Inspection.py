@@ -94,7 +94,7 @@ class Inspection(object):
 
             # formatting the response
             response = {"id": sig_id,
-                        "parameters": {"family": family, "name": name,
+                        "parameters": {"class": family, "name": name,
                                        "file": file, "url": url}}
 
             signatures.append(response)

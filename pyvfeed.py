@@ -6,7 +6,7 @@
 import sys
 import argparse
 import importlib
-sys.path.append("../..")
+sys.path.append("..")
 
 try:
     from core.Risk import Risk

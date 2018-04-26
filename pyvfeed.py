@@ -5,6 +5,8 @@
 
 import sys
 import argparse
+import importlib
+sys.path.append("../..")
 
 try:
     from core.Risk import Risk
@@ -41,6 +43,8 @@ if __name__ == "__main__":
                         nargs=1)
     parser.add_argument("--export", metavar="CVE, CPE", type=str, help="Export all metadata to JSON file",
                         nargs=1)
+    parser.add_argument("--plugin", metavar="Plugin name", type=str, help="Load third party plugins",
+                        nargs=2)
     args = parser.parse_args()
 
     if args.version:
@@ -89,6 +93,14 @@ if __name__ == "__main__":
         id = args.export[0]
         Export(id).dump_json()
         # Export(id).dump_yaml()
+
+    if args.plugin:
+        plg_name = args.plugin[0]
+        target = args.plugin[1]
+        module = str.join('.', ('plugins', plg_name, 'api'))
+
+        api_class = getattr(importlib.import_module(module),"api")
+        api_class().test()
 
     if len(sys.argv) < 2:
         parser.print_help()

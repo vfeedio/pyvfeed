@@ -6,11 +6,13 @@
 import sys
 import argparse
 import importlib
+
 sys.path.append("..")
 
 try:
     from core.Risk import Risk
     from lib.Update import Update
+    from lib.Search import Search
     from core.Export import Export
     from core.Defense import Defense
     from lib.Version import APIversion
@@ -40,6 +42,9 @@ if __name__ == "__main__":
     parser.add_argument("--exploitation", metavar="CVE, CPE", type=str, help="Get exploits and PoCs data",
                         nargs=1)
     parser.add_argument("--defense", metavar="CVE, CPE", type=str, help="Get detective, reactive & preventive data",
+                        nargs=1)
+    parser.add_argument("--search", metavar="cve|cpe|cwe|oval|text", type=str,
+                        help="Search for CVE or CPE",
                         nargs=1)
     parser.add_argument("--export", metavar="CVE, CPE", type=str, help="Export all metadata to JSON file",
                         nargs=1)
@@ -94,12 +99,20 @@ if __name__ == "__main__":
         Export(id).dump_json()
         # Export(id).dump_yaml()
 
+    if args.search:
+        id = args.search[0]
+        # search cve
+        # print(Search(id).search_cve())
+
+        # search cpe
+        print(Search(id).search_cpe())
+
     if args.plugin:
         plg_name = args.plugin[0]
         target = args.plugin[1]
         module = str.join('.', ('plugins', plg_name, 'api'))
 
-        api_class = getattr(importlib.import_module(module),"api")
+        api_class = getattr(importlib.import_module(module), "api")
         api_class().test()
 
     if len(sys.argv) < 2:

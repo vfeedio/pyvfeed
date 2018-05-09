@@ -113,7 +113,22 @@ from core.Export import Export
 
 Export(cve).dump_json()
 
-# updating the database
+# update module
 from lib.Update import Update
 
 Update().update()
+
+# search module
+from lib.Search import Search
+
+# search a CPE 2.2
+cpe = "cpe:/a:apache:tomcat:7.0.5"
+print(Search(cpe).search_cpe())
+
+# search a CPE 2.3
+cpe = "cpe:2.3:a:adobe:flash_player:*:*:*:*:*:*:*:*"
+print(Search(cpe).search_cpe())
+
+# search a cve
+cpe = "cve-2017-3100"
+print(Search(cpe).search_cve())

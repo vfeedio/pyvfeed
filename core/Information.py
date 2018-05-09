@@ -15,7 +15,7 @@ class Information(object):
         (self.cur, self.query) = Database(self.id).db_init()
 
     def get_info(self):
-        """ callable method - return vulnerability basic info as JSON """
+        """ callable method - return vulnerability basic info """
 
         # init local list
         info = []
@@ -25,7 +25,7 @@ class Information(object):
         for data in self.cur.fetchall():
             # formatting the response
             response = {"id": self.id, "parameters": {"published": data[1], "modified": data[2],
-                        "summary": data[3]}}
+                                                      "summary": data[3]}}
             info.append(response)
 
         # adding the appropriate tag.
@@ -55,7 +55,7 @@ class Information(object):
         return utility.serialize_data(references)
 
     def get_all(self):
-        """ callable method - return basic and references as json"""
+        """ callable method - return basic info and references"""
 
         info = json.loads(self.get_info())
         references = json.loads(self.get_references())

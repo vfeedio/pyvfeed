@@ -16,7 +16,7 @@ class Defense(object):
         (self.cur, self.query) = Database(self.id).db_init()
 
     def get_all(self):
-        """ callable method - return both remote and local scanners signatures"""
+        """ callable method - return both advisories and other rules"""
 
         advisory = json.loads(Preventive(self.id).get_advisory())
         rules = json.loads(Detective(self.id).get_rules())

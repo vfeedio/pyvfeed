@@ -16,10 +16,12 @@ from core.Classification import Classification
 
 class Export(object):
     def __init__(self, id):
+        """init """
+
         self.id = id
         (self.cur, self.query) = Database(self.id).db_init()
-        self.json_file = self.id + '.json'
-        self.yaml_file = self.id + '.yaml'
+        self.json_file = str.join('.', (self.id.upper(), 'json'))
+        self.yaml_file = str.join('.', (self.id.upper(), 'yaml'))
 
     def load_data(self):
         """ load metadata related to vuln"""

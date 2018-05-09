@@ -14,6 +14,7 @@ from common import config as cfg
 
 def init():
     """ init test """
+
     global db_file
     global db_path
     global export_path
@@ -36,6 +37,7 @@ def set_db_file():
 
 def check_file(file):
     """ file test """
+
     if not (os.path.isfile(file) or os.access(file, os.R_OK)):
         reason = "permission denied or object not found"
         return False, reason

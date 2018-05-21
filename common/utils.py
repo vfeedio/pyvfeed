@@ -94,15 +94,6 @@ def serialize_data(response):
         return json.dumps(None, indent=2)
 
 
-def check_list_data(response):
-    """ return list data or null"""
-
-    if len(response) != 0:
-        return response
-    else:
-        return None
-
-
 def checksum(file):
     """ return checksum with algorithm sha-256"""
 

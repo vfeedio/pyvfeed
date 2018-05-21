@@ -5,6 +5,7 @@
 import json
 
 from lib.Database import Database
+from collections import OrderedDict
 from common import utils as utility
 
 
@@ -16,14 +17,14 @@ class Defense(object):
         (self.cur, self.query) = Database(self.id).db_init()
 
     def get_all(self):
-        """ callable method - return both advisories and other rules"""
+        """ callable method - return both remote and local scanners signatures"""
 
-        advisory = json.loads(Preventive(self.id).get_advisory())
-        rules = json.loads(Detective(self.id).get_rules())
+        advisory = json.loads(Preventive(self.id).get_advisory(), object_pairs_hook=OrderedDict)
+        rules = json.loads(Detective(self.id).get_rules(), object_pairs_hook=OrderedDict)
 
         advisory.update(rules)
 
-        # formatting the response
+        # format the response
         response = {"defense": advisory}
 
         return utility.serialize_data(response)
@@ -40,55 +41,44 @@ class Preventive(object):
         """ callable method - return bulletins and advisories data """
 
         # init local list
-        advisory = []
+        response = []
 
         self.cur.execute("SELECT source FROM advisory_db GROUP BY source")
 
-        for data in self.cur.fetchall():
-            self.source = data[0].strip()
-            responses = self.enum_bulletins()
+        for source in self.cur.fetchall():
+            source = source[0].strip()
+            data = self.enum_bulletins(source)
 
-            # get only responses with valid data. Otherwise the json will be huge (a lot of sources :) )
-            if responses is not None:
-                response = {self.source: responses}
-                advisory.append(response)
+            # get only responses with valid data.
+            if data:
+                # format the response
+                tag = {source: data}
+                response.append(tag)
 
-        # adding the appropriate tag.
-        advisory = {"preventive": advisory}
+        # set tag
+        response = {"preventive": response}
 
-        return utility.serialize_data(advisory)
+        return utility.serialize_data(response)
 
-    def enum_bulletins(self):
+    def enum_bulletins(self, source):
         """ list information from different sources related to advisories and bulletins"""
 
-        signatures = []
+        # init local list
+        response = []
 
-        # count
-        self.cur.execute(
-            "SELECT count(id) FROM advisory_db WHERE (source = '{tn}') and cve_id=? order by id".format(
-                tn=self.source),
-            self.query)
-        self.count = self.cur.fetchone()
+        self.cur.execute("SELECT type,id,link FROM advisory_db WHERE source = '{0}' and cve_id=? ".format(source),
+                         self.query)
 
-        self.cur.execute(
-            "SELECT * FROM advisory_db WHERE (source = '{tn}') and cve_id=?".format(
-                tn=self.source),
-            self.query)
-        data = self.cur.fetchall()
+        for data in self.cur.fetchall():
+            type = data[0]
+            id = data[1]
+            url = data[2]
 
-        # only sources with valid data
+            # format the response
+            bulletins = {"id": id, "parameters": {"class": type, "url": url}}
+            response.append(bulletins)
 
-        for i in range(0, self.count[0]):
-            # setting advisories information
-            type = data[i][0]
-            sig_id = data[i][2]
-            url = data[i][3]
-
-            # formatting the response
-            response = {"id": sig_id, "parameters": {"class": type, "url": url}}
-            signatures.append(response)
-
-        return utility.check_list_data(signatures)
+        return response
 
 
 class Detective(object):
@@ -102,51 +92,41 @@ class Detective(object):
         """ callable method - return IPS and IDS signatures """
 
         # init local list
-        rules = []
+        response = []
 
         self.cur.execute("SELECT source FROM detection_db GROUP BY source")
 
-        for data in self.cur.fetchall():
-            self.source = data[0].strip()
-            responses = self.enum_rules()
+        for source in self.cur.fetchall():
+            source = source[0].strip()
+            data = self.enum_rules(source)
 
             # get only responses with valid data. Otherwise the json will be huge (a lot of sources :) )
-            if responses is not None:
-                response = {self.source: responses}
-                rules.append(response)
+            if data:
+                tag = {source: data}
+                response.append(tag)
 
-        # adding the appropriate tag.
-        rules = {"detective": rules}
+        # set tag.
+        response = {"detective": response}
 
-        return utility.serialize_data(rules)
+        return utility.serialize_data(response)
 
-    def enum_rules(self):
+    def enum_rules(self, source):
         """ list information from different sources related to IPS and IDS"""
 
-        signatures = []
-
-        # count
-        self.cur.execute(
-            "SELECT count(id) FROM detection_db WHERE (source = '{tn}') and cve_id=?".format(
-                tn=self.source),
-            self.query)
-        self.count = self.cur.fetchone()
+        response = []
 
         self.cur.execute(
-            "SELECT * FROM detection_db WHERE (source = '{tn}') and cve_id=?".format(tn=self.source),
-            self.query)
-        data = self.cur.fetchall()
+            "SELECT id,class,title,link FROM detection_db WHERE source = '{0}' and cve_id=?".format(source), self.query)
 
-        for i in range(0, self.count[0]):
-            # setting rules information
-            sig_id = data[i][1]
-            family = data[i][2]
-            title = data[i][3]
-            url = data[i][4]
+        for data in self.cur.fetchall():
+            id = data[0]
+            family = data[1]
+            title = data[2]
+            url = data[3]
 
-            # formatting the response
-            response = {"id": sig_id,
-                        "parameters": {"class": family, "title": title, "url": url}}
-            signatures.append(response)
+            rules = {"id": id,
+                     "parameters": {"class": family, "title": title, "url": url}}
 
-        return utility.check_list_data(signatures)
+            response.append(rules)
+
+        return response

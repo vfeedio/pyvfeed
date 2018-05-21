@@ -2,6 +2,10 @@
 
 Python 3.x API for the next generation of the vFeed Vulnerability and Threat Database.
 
+### Beta 0.9.5
+* Optimized the code and export performance
+* Modified tag from `attack_id` to `attack_methods`
+
 ### Beta 0.9.4
 * Added a basic search module for CVEs and CPEs.
 * Code clean and fix.

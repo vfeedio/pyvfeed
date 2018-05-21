@@ -5,6 +5,7 @@
 import json
 
 from lib.Database import Database
+from collections import OrderedDict
 from common import utils as utility
 
 
@@ -14,30 +15,43 @@ class Information(object):
         self.id = id
         (self.cur, self.query) = Database(self.id).db_init()
 
+    def get_all(self):
+        """ callable method - return basic and references as json"""
+
+        info = json.loads(self.get_info(), object_pairs_hook=OrderedDict)
+        references = json.loads(self.get_references(), object_pairs_hook=OrderedDict)
+        # merge
+        info.update(references)
+
+        # format the response
+        response = {"information": info}
+
+        return utility.serialize_data(response)
+
     def get_info(self):
-        """ callable method - return vulnerability basic info """
+        """ callable method - return vulnerability basic info as JSON """
 
         # init local list
-        info = []
+        response = []
 
         self.cur.execute('SELECT * FROM cve_db WHERE cve_id=?', self.query)
 
         for data in self.cur.fetchall():
-            # formatting the response
-            response = {"id": self.id, "parameters": {"published": data[1], "modified": data[2],
-                                                      "summary": data[3]}}
-            info.append(response)
+            # format the response
+            information = {"id": self.id, "parameters": {"published": data[1], "modified": data[2],
+                                                         "summary": data[3]}}
+            response.append(information)
 
-        # adding the appropriate tag.
-        info = {"description": info}
+        # set the tag
+        response = {"description": response}
 
-        return utility.serialize_data(info)
+        return utility.serialize_data(response)
 
     def get_references(self):
         """ callable method -  return vulnerability references """
 
         # init local list
-        references = []
+        response = []
 
         self.cur.execute('SELECT * FROM map_refs_cve WHERE cve_id=?', self.query)
 
@@ -45,24 +59,12 @@ class Information(object):
             # setting reference info
             vendor = data[0]
             url = data[1]
-            # formatting the response
-            response = {"vendor": vendor, "url": url}
-            references.append(response)
 
-        # adding the appropriate tag.
-        references = {"references": references}
+            # format the response
+            references = {"vendor": vendor, "url": url}
+            response.append(references)
 
-        return utility.serialize_data(references)
-
-    def get_all(self):
-        """ callable method - return basic info and references"""
-
-        info = json.loads(self.get_info())
-        references = json.loads(self.get_references())
-        # merge
-        info.update(references)
-
-        # formatting the response
-        response = {"information": info}
+        # set the tag
+        response = {"references": response}
 
         return utility.serialize_data(response)

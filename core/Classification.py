@@ -68,20 +68,21 @@ class Classification(object):
             self.cur.execute("SELECT title,link,class,relations,capec_id FROM cwe_db WHERE cwe_id='%s' " % cwe_id)
             cwe_data = self.cur.fetchall()
 
-            title = cwe_data[0][0]
-            url = cwe_data[0][1]
-            cwe_class = cwe_data[0][2]
-            relationship = cwe_data[0][3]
-            capec = cwe_data[0][4]
+            if cwe_data:
+                title = cwe_data[0][0]
+                url = cwe_data[0][1]
+                cwe_class = cwe_data[0][2]
+                relationship = cwe_data[0][3]
+                capec = cwe_data[0][4]
 
-            # format the response
-            weaknesses = {"id": cwe_id,
-                          "parameters": {"class": cwe_class, "title": title,
-                                         "relationship": relationship, "url": url,
-                                         "attack_patterns": self.enum_capec(capec),
-                                         "ranking": {"category": self.enum_category(cwe_id),
-                                                     "wasc": self.enum_wasc(cwe_id)}}}
-            response.append(weaknesses)
+                # format the response
+                weaknesses = {"id": cwe_id,
+                              "parameters": {"class": cwe_class, "title": title,
+                                             "relationship": relationship, "url": url,
+                                             "attack_patterns": self.enum_capec(capec),
+                                             "ranking": {"category": self.enum_category(cwe_id),
+                                                         "wasc": self.enum_wasc(cwe_id)}}}
+                response.append(weaknesses)
 
         # set the tag
         response = {"weaknesses": response}

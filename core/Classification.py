@@ -80,8 +80,9 @@ class Classification(object):
                               "parameters": {"class": cwe_class, "title": title,
                                              "relationship": relationship, "url": url,
                                              "attack_patterns": self.enum_capec(capec),
-                                             "ranking": {"category": self.enum_category(cwe_id),
-                                                         "wasc": self.enum_wasc(cwe_id)}}}
+                                             "ranking": {"categorization": self.enum_category(cwe_id),
+                                                         "wasc": self.enum_wasc(cwe_id),
+                                                         "att&ck_mitre": self.enum_attack_mitre(capec)}}}
                 response.append(weaknesses)
 
         # set the tag
@@ -145,14 +146,51 @@ class Classification(object):
 
         # calling CAPEC data
         for capec_id in capecs:
-            self.cur.execute("SELECT title,link,attack_id FROM capec_db WHERE capec_id='%s' " % capec_id)
+            self.cur.execute(
+                "SELECT title,link,attack_method, mitigations FROM capec_db WHERE capec_id='%s' " % capec_id)
             for data in self.cur.fetchall():
                 title = data[0]
                 url = data[1]
                 attack_methods = data[2]
+                mitigations = data[3]
 
                 # format the response
-                capec = {"id": capec_id, "parameters": {"title": title, "attack_methods": attack_methods, "url": url}}
+                capec = {"id": capec_id,
+                         "parameters": {"title": title, "attack_methods": attack_methods, "mitigations": mitigations,
+                                        "url": url}}
                 response.append(capec)
+
+        return response
+
+    def enum_attack_mitre(self, capec):
+        """ return extra Att&ck Mitre  """
+
+        # init local list
+        response = []
+
+        # Splitting identifiers as they are packed in the database
+        capecs = capec.split(",")
+
+        # calling CAPEC data
+        for capec_id in capecs:
+            self.cur.execute("SELECT attack_mitre_id FROM capec_db WHERE capec_id='%s' " % capec_id)
+            id = self.cur.fetchone()
+            if id:
+                self.cur.execute("SELECT * FROM attack_mitre_db WHERE id='%s' " % id[0])
+                for data in self.cur.fetchall():
+                    attack_id = data[0]
+                    profile = data[1]
+                    name = data[2]
+                    description = data[3]
+                    tactic = data[4]
+                    url = data[5]
+                    file = data[6]
+
+                    # format the response
+                    attack_mitre = {"id": attack_id,
+                                    "parameters": {"profile": profile, "name": name, "description": description,
+                                                   "tactic": tactic, "url": url, "file": file,
+                                                   "relationship": capec_id}}
+                    response.append(attack_mitre)
 
         return response

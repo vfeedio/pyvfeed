@@ -19,7 +19,7 @@ Python 3 API for the new generation of vFeed Vulnerability and Threat Database a
 * Amazon SDK boto3
 
 #### How to ?
-Check the `wiki` for complete documentation
+Check the [wiki](https://github.com/vfeedio/pyvfeed/wiki) for complete documentation
 
 #### Last release
-API version 0.9.5
+API version 0.9.6

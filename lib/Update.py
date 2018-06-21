@@ -43,8 +43,7 @@ class Update(object):
 
                 if "update" in self.file:
                     self.update_file = self.file
-
-                if "vfeed" in self.file:
+                else:
                     self.remote_db = self.file
 
             if not os.path.isfile(self.local_db):
@@ -79,7 +78,7 @@ class Update(object):
                     self.clean()
 
                 else:
-                    print("\t[-] Database updated available")
+                    print("\t[-] Database update available")
                     self.download(self.remote_db)
                     self.unpack_database()
 

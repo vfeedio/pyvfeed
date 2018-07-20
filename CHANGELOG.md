@@ -2,6 +2,13 @@
 
 Python 3.x API for the next generation of the vFeed Vulnerability and Threat Database.
 
+### Beta 0.9.7
+* Enhanced the support to the [MITRE’s Adversarial Tactics, Techniques, and Common Knowledge (ATT&CK™)](https://attack.mitre.org/wiki/Main_Page). 3 new keys added :
+    * Permission required (`permission_required`)
+    * By passed defenses (`bypassed_defenses`)
+    * data sources (`data_sources`)
+* Regenerate the whole vFeed Professional Vulnerability Database alonside 'Sync & Use' private Github repositories.
+
 ### Beta 0.9.6
 * Added the support to the [MITRE’s Adversarial Tactics, Techniques, and Common Knowledge (ATT&CK™)](https://attack.mitre.org/wiki/Main_Page) initiative.
 * Reflected the changes in the exported JSON files with the addition of `attack_mitre` key under `ranking` section.

@@ -183,13 +183,18 @@ class Classification(object):
                     name = data[2]
                     description = data[3]
                     tactic = data[4]
-                    url = data[5]
-                    file = data[6]
+                    permission_required = data[5]
+                    bypassed_defense = data[6]
+                    data_sources = data[7]
+                    url = data[8]
+                    file = data[9]
 
                     # format the response
                     attack_mitre = {"id": attack_id,
                                     "parameters": {"profile": profile, "name": name, "description": description,
-                                                   "tactic": tactic, "url": url, "file": file,
+                                                   "tactic": tactic, "permission_required": permission_required,
+                                                   "bypassed_defenses": bypassed_defense, "data_sources": data_sources,
+                                                   "url": url, "file": file,
                                                    "relationship": capec_id}}
                     response.append(attack_mitre)
 

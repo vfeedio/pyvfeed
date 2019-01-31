@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
-# Copyright (C) 2013 - 2018 vFeed IO
+# Copyright (C) 2013 - 2019 vFeed IO
 
 import json
 from common import __version__, __title__, __email__
-from common import config as cfg
 
 
 class APIversion(object):

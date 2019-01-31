@@ -2,6 +2,22 @@
 
 Python 3.x API for the next generation of the vFeed Vulnerability and Threat Database.
 
+### 0.9.8
+* Added a new method `get_packages` to `Classification` class. The method will return affected packages vendors, product names, versions and more information.
+* Reflected the changes of `get_packages` addition on the following:
+    * Updated JSON files with the addition of `packages` key under `classification` section. The `packages` key has a vendor section with multiple keys (product, version affected and condition)
+    * Added new table `packages_db` in the SQLite database.
+* Enhanced the `Search` class as follows:
+    * Added a new method `search_cpe` to search per [CWE (Common Weakness Enumeration)](https://cwe.mitre.org). 
+    * Updated the `pyvfeed` CLI to search using 3 arguments (cve, cpe and cwe) 
+    * Code optimizated. 
+* Updated `api_sample.py` to demonstate how to perform the following:
+    * Call the `get_packages` in API mode
+    * Search for CWE in API mode.
+* Fixed `requirement.txt` to support the latest `PyYAML` version.
+* Reflected the changes in documentation
+* Regenerate the whole vFeed Professional Vulnerability Database alonside 'Sync & Use' private Github repositories.
+
 ### Beta 0.9.7
 * Enhanced the support to the [MITRE’s Adversarial Tactics, Techniques, and Common Knowledge (ATT&CK™)](https://attack.mitre.org/wiki/Main_Page). 3 new keys added :
     * Permission required (`permission_required`)

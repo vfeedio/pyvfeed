@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
-# Copyright (C) 2013 - 2018 vFeed IO
+# Copyright (C) 2013 - 2019 vFeed IO
 
 import sys
 import argparse
@@ -43,9 +43,9 @@ if __name__ == "__main__":
                         nargs=1)
     parser.add_argument("--defense", metavar="CVE, CPE", type=str, help="Get detective, reactive & preventive data",
                         nargs=1)
-    parser.add_argument("--search", metavar="cve|cpe|cwe|oval|text", type=str,
-                        help="Search for CVE or CPE",
-                        nargs=1)
+    parser.add_argument("--search", metavar="cve|cpe|cwe", type=str,
+                        help="Search for CVE, CPE2.2 | CPE2.3 or CWE",
+                        nargs=2)
     parser.add_argument("--export", metavar="CVE, CPE", type=str, help="Export all metadata to JSON file",
                         nargs=1)
     parser.add_argument("--plugin", metavar="Plugin name", type=str, help="Load third party plugins",
@@ -68,8 +68,9 @@ if __name__ == "__main__":
 
     if args.classification:
         id = args.classification[0]
-        # print(Classification(id).get_weaknesses())
-        # print(Classification(id).get_targets())
+        #print(Classification(id).get_weaknesses())
+        #print(Classification(id).get_targets())
+        #print(Classification(id).get_packages())
         print(Classification(id).get_all())
 
     if args.risk:
@@ -100,12 +101,12 @@ if __name__ == "__main__":
         # Export(id).dump_yaml()
 
     if args.search:
-        id = args.search[0]
-        # search cve
-        # print(Search(id).search_cve())
+        type = args.search[0]
+        type = str.join('_', ("search", type))
+        id = args.search[1]
 
-        # search cpe
-        print(Search(id).search_cpe())
+        result = getattr(Search(id), type)
+        print(result())
 
     if args.plugin:
         plg_name = args.plugin[0]

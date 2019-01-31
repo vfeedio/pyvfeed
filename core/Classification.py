@@ -17,12 +17,37 @@ class Classification(object):
         """ callable method - return both targets and weaknesses affected by vulnerability"""
 
         targets = json.loads(self.get_targets(), object_pairs_hook=OrderedDict)
+        packages = json.loads(self.get_packages(), object_pairs_hook=OrderedDict)
         weaknesses = json.loads(self.get_weaknesses(), object_pairs_hook=OrderedDict)
 
+        targets.update(packages)
         targets.update(weaknesses)
 
         # format the response
         response = {"classification": targets}
+
+        return utility.serialize_data(response)
+
+    def get_packages(self):
+        """ callable method - return affected packages (vendor, product, version) by vulnerability"""
+
+        # init local list
+        response = []
+
+        self.cur.execute("SELECT vendor FROM packages_db WHERE cve_id=? GROUP BY vendor", self.query)
+
+        for vendor in self.cur.fetchall():
+            vendor = vendor[0].strip()
+            data = self.enum_packages(vendor)
+
+            # get only responses with valid data.
+            if data:
+                # format the response
+                tag = {vendor: data}
+                response.append(tag)
+
+        # set tag
+        response = {"packages": response}
 
         return utility.serialize_data(response)
 
@@ -96,6 +121,7 @@ class Classification(object):
         # init local list
         response = []
 
+        # query the database
         self.cur.execute("SELECT cwe_id,title,link,relations FROM cwe_db where class = 'category' and relations like ?",
                          ('%' + cwe_id + '%',))
 
@@ -197,5 +223,27 @@ class Classification(object):
                                                    "url": url, "file": file,
                                                    "relationship": capec_id}}
                     response.append(attack_mitre)
+
+        return response
+
+    def enum_packages(self, vendor):
+        """ list relevant packages """
+
+        # init local list
+        response = []
+
+        self.cur.execute(
+            "SELECT product,version_affected, affected_condition FROM packages_db WHERE vendor = '{0}' and cve_id=? ".format(
+                vendor),
+            self.query)
+
+        for data in self.cur.fetchall():
+            product = data[0]
+            version_affected = data[1]
+            affected_condition = data[2]
+
+            # format the response
+            packages = {"product": product, "version": {"affected": version_affected, "condition": affected_condition}}
+            response.append(packages)
 
         return response

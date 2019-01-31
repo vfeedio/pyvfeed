@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
-# Copyright (C) 2013 - 2018 vFeed IO
+# Copyright (C) 2013 - 2019 vFeed IO
 
 import json
 
@@ -13,6 +13,7 @@ from core.Information import Information
 info = Information(cve).get_info()
 # printing the response (by default in JSON)
 print(info)
+
 
 # now printing only Idenfitier or any other specific key
 # first we load the response with json.loads
@@ -60,6 +61,11 @@ for i in range(0, len(targets['targets'])):
 # loading a vulnerability weakeness
 weaknesses = Classification(cve).get_weaknesses()
 print(weaknesses)
+
+# loading affected packages
+cve = "CVE-2018-14774"
+packages = Classification(cve).get_packages()
+print(packages)
 
 # loading a vulnerability exploits
 from core.Exploitation import Exploitation
@@ -113,10 +119,6 @@ from core.Export import Export
 
 Export(cve).dump_json()
 
-# update module
-from lib.Update import Update
-
-Update().update()
 
 # search module
 from lib.Search import Search
@@ -130,5 +132,14 @@ cpe = "cpe:2.3:a:adobe:flash_player:*:*:*:*:*:*:*:*"
 print(Search(cpe).search_cpe())
 
 # search a cve
-cpe = "cve-2017-3100"
-print(Search(cpe).search_cve())
+cve = "cve-2017-3100"
+print(Search(cve).search_cve())
+
+# search a cwe
+cwe = "cwe-89"
+print(Search(cwe).search_cwe())
+
+# update module
+from lib.Update import Update
+
+#Update().update()

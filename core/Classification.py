@@ -233,9 +233,8 @@ class Classification(object):
         response = []
 
         self.cur.execute(
-            "SELECT product,version_affected, affected_condition FROM packages_db WHERE vendor = '{0}' and cve_id=? ".format(
-                vendor),
-            self.query)
+            '''SELECT DISTINCT product,version_affected, affected_condition FROM packages_db WHERE vendor="%s" and cve_id="%s" ''' % (
+            vendor, self.query[0]))
 
         for data in self.cur.fetchall():
             product = data[0]

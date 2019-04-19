@@ -29,7 +29,7 @@ class Classification(object):
         return utility.serialize_data(response)
 
     def get_packages(self):
-        """ callable method - return affected packages (vendor, product, version) by vulnerability"""
+        """ callable method - return affected packages & libraries (vendor, product, version) by vulnerability"""
 
         # init local list
         response = []
@@ -57,25 +57,21 @@ class Classification(object):
         # init local list
         response = []
 
-        self.cur.execute('SELECT * FROM map_cpe_cve WHERE cve_id=?', self.query)
+        self.cur.execute(
+            "SELECT configuration FROM map_cpe_cve where cve_id=? GROUP BY configuration order by configuration",
+            self.query)
 
-        for data in self.cur.fetchall():
-            # set the CPE identifiers
-            cpe22_id = data[0]
-            cpe23_id = data[1]
+        for configs in self.cur.fetchall():
+            self.cur.execute('''SELECT * FROM map_cpe_cve WHERE configuration="%s" and cve_id="%s"  ''' % (
+                configs[0], self.query[0]))
 
-            # set the title
-            self.cur.execute("SELECT title FROM cpe_db where cpe_id = ?", (cpe22_id,))
-            title = self.cur.fetchone()
+            data = self.cur.fetchall()
+            config_id = data[0][0]
 
-            if title is not None:
-                title = title[0]
+            tag = {"id": config_id, "parameters": self.enum_cpe(data)}
+            response.append(tag)
 
-            # format the response
-            targets = {"title": title, "cpe2.2": cpe22_id, "cpe2.3": cpe23_id}
-            response.append(targets)
-
-        # set the tag
+        # set tag
         response = {"targets": response}
 
         return utility.serialize_data(response)
@@ -114,6 +110,50 @@ class Classification(object):
         response = {"weaknesses": response}
 
         return utility.serialize_data(response)
+
+    def enum_cpe(self, data):
+        """ return CPEs identifiers"""
+
+        # init local list
+        response = []
+        response_2 = []
+        running_on = False
+
+        for config in data:
+            # extract the configuration data
+            cpe22_id = config[1]
+            cpe23_id = config[2]
+            start_version = config[3]
+            end_version = config[4]
+            running = config[5]
+
+            # set the title
+            self.cur.execute("SELECT title FROM cpe_db where cpe_id = ?", (cpe22_id,))
+            title = self.cur.fetchone()
+
+            if title is not None:
+                title = title[0]
+
+            # format the response (general case)
+            if running != "running_on_with":
+                # format the response
+                targets = {"title": title, "cpe2.2": cpe22_id, "cpe2.3": cpe23_id,
+                           "version_affected": {"from": start_version, "to": end_version}}
+                response.append(targets)
+
+            # format the response (case running_on_with)
+            if running == "running_on_with":
+                running_on = True
+                # format the response
+                targets_on = {"title": title, "cpe2.2": cpe22_id, "cpe2.3": cpe23_id}
+                response_2.append(targets_on)
+
+        # merging the responses (whenever running_on_with is enabled)
+        if running_on:
+            targets = {"running_on": response_2}
+            response.append(targets)
+
+        return response
 
     def enum_category(self, cwe_id):
         """ return categories identifiers such Top 25 and OWASP Top etc .."""
@@ -231,10 +271,11 @@ class Classification(object):
 
         # init local list
         response = []
+        response2 = []
 
         self.cur.execute(
             '''SELECT DISTINCT product,version_affected, affected_condition FROM packages_db WHERE vendor="%s" and cve_id="%s" ''' % (
-            vendor, self.query[0]))
+                vendor, self.query[0]))
 
         for data in self.cur.fetchall():
             product = data[0]

@@ -22,4 +22,4 @@ Python 3 API for the new generation of vFeed Vulnerability and Threat Database a
 Check the [wiki](https://github.com/vfeedio/pyvfeed/wiki) for complete documentation
 
 #### Last release
-API version 0.9.8
+API version 0.9.9

@@ -2,5 +2,5 @@
 # Copyright (C) 2013 - 2019 vFeed IO
 
 __title__ = "Python 3.x API For vFeed Professional Edition"
-__version__ = "0.9.8"
+__version__ = "0.9.9"
 __email__ = "support@vfeed.io"

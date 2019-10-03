@@ -233,6 +233,7 @@ class Classification(object):
 
         # init local list
         response = []
+        attack_list = []
 
         # Splitting identifiers as they are packed in the database
         capecs = capec.split(",")
@@ -242,27 +243,34 @@ class Classification(object):
             self.cur.execute("SELECT attack_mitre_id FROM capec_db WHERE capec_id='%s' " % capec_id)
             id = self.cur.fetchone()
             if id:
-                self.cur.execute("SELECT * FROM attack_mitre_db WHERE id='%s' " % id[0])
-                for data in self.cur.fetchall():
-                    attack_id = data[0]
-                    profile = data[1]
-                    name = data[2]
-                    description = data[3]
-                    tactic = data[4]
-                    permission_required = data[5]
-                    bypassed_defense = data[6]
-                    data_sources = data[7]
-                    url = data[8]
-                    file = data[9]
+                id = id[0].split('|')
+                [x for x in id if x != '' and attack_list.append(x)]
 
-                    # format the response
-                    attack_mitre = {"id": attack_id,
-                                    "parameters": {"profile": profile, "name": name, "description": description,
-                                                   "tactic": tactic, "permission_required": permission_required,
-                                                   "bypassed_defenses": bypassed_defense, "data_sources": data_sources,
-                                                   "url": url, "file": file,
-                                                   "relationship": capec_id}}
-                    response.append(attack_mitre)
+        # setting a clean list of ATT&CK identifiers
+        attack_list = list(dict.fromkeys(attack_list))
+
+        # generating the data
+        for item in attack_list:
+            self.cur.execute("SELECT * FROM attack_mitre_db WHERE id='%s' " % item)
+            for data in self.cur.fetchall():
+                attack_id = data[0]
+                profile = data[1]
+                name = data[2]
+                description = data[3]
+                tactic = data[4]
+                permission_required = data[5]
+                bypassed_defense = data[6]
+                data_sources = data[7]
+                url = data[8]
+                file = data[9]
+
+                # format the response
+                attack_mitre = {"id": attack_id,
+                                "parameters": {"profile": profile, "name": name, "description": description,
+                                               "tactic": tactic, "permission_required": permission_required,
+                                               "bypassed_defenses": bypassed_defense, "data_sources": data_sources,
+                                               "url": url, "file": file}}
+                response.append(attack_mitre)
 
         return response
 
@@ -271,7 +279,6 @@ class Classification(object):
 
         # init local list
         response = []
-        response2 = []
 
         self.cur.execute(
             '''SELECT DISTINCT product,version_affected, affected_condition FROM packages_db WHERE vendor="%s" and cve_id="%s" ''' % (

@@ -74,7 +74,7 @@ class Inspection(object):
         response = []
 
         self.cur.execute(
-            "SELECT id,family, name, file, link FROM scanners_db WHERE source = '{0}' and cve_id=? ".format(source),
+            "SELECT DISTINCT id,family, name, file, link FROM scanners_db WHERE source = '{0}' and cve_id=? ".format(source),
             self.query)
 
         for data in self.cur.fetchall():

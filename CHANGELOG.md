@@ -2,6 +2,14 @@
 
 Python 3.x API for the next generation of the vFeed Vulnerability and Threat Database.
 
+### 1.0.0
+
+* Updated `Classification` class to reflect the changes made in `capec_db` table following the update to version 3.2.
+    * As a result, several `MITRE ATT&CK` identifiers has been added to the database. 
+    
+* Regenerate the whole vFeed Professional Vulnerability Database alonside 'Sync & Use' private Github repositories.
+
+
 ### 0.9.9
 
 * Updated the method `get_targets` in `Classification` class to reflect the changes made in `map_cpe_cve` table.

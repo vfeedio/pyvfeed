@@ -1,8 +1,8 @@
-## API Python for The Correlated Vulnerability and Threat Intelligence Database
-### For Only Enterprise & Pro Releases
+## Python API for The Correlated Vulnerability Intelligence and Threat Database
+### For Only Enterprise & Pro
 
 
-Python 3 API for the new generation of vFeed Vulnerability and Threat Database and multi-feeds.
+Python 3 API for the new generation of **vFeed Vulnerability Intelligence & Threat Indicators Database**.
 
 ### Main Features
 * Support Python 3
@@ -11,7 +11,7 @@ Python 3 API for the new generation of vFeed Vulnerability and Threat Database a
 * Introduction of third party plugins
 * Support of Amazon S3
 * Sync and Use : pre-generated JSON in private github data repository
-* And a lot of cool stuff to be announced in time ;)
+* And a lot of cool stuff ;)
 
 #### Requirements
 * Python 3
@@ -22,4 +22,4 @@ Python 3 API for the new generation of vFeed Vulnerability and Threat Database a
 Check the [wiki](https://github.com/vfeedio/pyvfeed/wiki) for complete documentation
 
 #### Last release
-API version 0.9.9
+API version 1.0.0

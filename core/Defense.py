@@ -66,7 +66,7 @@ class Preventive(object):
         # init local list
         response = []
 
-        self.cur.execute("SELECT type,id,link FROM advisory_db WHERE source = '{0}' and cve_id=? ".format(source),
+        self.cur.execute("SELECT DISTINCT type,id,link FROM advisory_db WHERE source = '{0}' and cve_id=? ".format(source),
                          self.query)
 
         for data in self.cur.fetchall():
@@ -116,7 +116,7 @@ class Detective(object):
         response = []
 
         self.cur.execute(
-            "SELECT id,class,title,link FROM detection_db WHERE source = '{0}' and cve_id=?".format(source), self.query)
+            "SELECT DISTINCT id,class,title,link FROM detection_db WHERE source = '{0}' and cve_id=?".format(source), self.query)
 
         for data in self.cur.fetchall():
             id = data[0]

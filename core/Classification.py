@@ -105,7 +105,7 @@ class Classification(object):
                                              "attack_patterns": self.enum_capec(capec),
                                              "ranking": {"categorization": self.enum_category(cwe_id),
                                                          "wasc": self.enum_wasc(cwe_id),
-                                                         "attack": self.enum_attack_mitre(capec)}}}
+                                                         "mitre_attack": self.enum_attack_mitre(capec)}}}
                 response.append(weaknesses)
 
         # set the tag

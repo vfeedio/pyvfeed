@@ -1,4 +1,5 @@
 {
+  "$schema": "vFeed,Inc Vulnerability Feed JSON schema v1.1",
   "type": "object",
   "properties": {
     "information": {

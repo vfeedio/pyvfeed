@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
+# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
 
 import json
 
@@ -103,7 +105,7 @@ class Classification(object):
                                              "attack_patterns": self.enum_capec(capec),
                                              "ranking": {"categorization": self.enum_category(cwe_id),
                                                          "wasc": self.enum_wasc(cwe_id),
-                                                         "att&ck_mitre": self.enum_attack_mitre(capec)}}}
+                                                         "attack": self.enum_attack_mitre(capec)}}}
                 response.append(weaknesses)
 
         # set the tag
@@ -281,16 +283,32 @@ class Classification(object):
         response = []
 
         self.cur.execute(
-            '''SELECT DISTINCT product,version_affected, affected_condition FROM packages_db WHERE vendor="%s" and cve_id="%s" ''' % (
-                vendor, self.query[0]))
+            "SELECT product FROM packages_db WHERE vendor = '{0}' and cve_id=? group by product".format(vendor),
+            self.query)
 
-        for data in self.cur.fetchall():
-            product = data[0]
-            version_affected = data[1]
-            affected_condition = data[2]
+        for product in self.cur.fetchall():
+            product = product[0].strip()
 
-            # format the response
-            packages = {"product": product, "version": {"affected": version_affected, "condition": affected_condition}}
-            response.append(packages)
+            if product:
+                self.cur.execute(
+                    "SELECT DISTINCT version_affected, affected_condition FROM packages_db WHERE product = '{0}' and "
+                    "cve_id=? ".format(product), self.query)
+
+                datas = self.cur.fetchall()
+
+                # craft packaging for every loop
+                packaging = []
+
+                for data in datas:
+                    version_affected = data[0]
+                    affected_condition = data[1]
+
+                    # format the versions affected / conditions response
+                    versions = {"affected": version_affected, "condition": affected_condition}
+                    packaging.append(versions)
+
+                # set the response tag for packages
+                tag = {product: packaging}
+                response.append(tag)
 
         return response

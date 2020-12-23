@@ -1,0 +1,905 @@
+{
+  "$schema": "vFeed,Inc Vulnerability Feed JSON schema v1.2",
+  "type": "object",
+  "properties": {
+    "information": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "published": {
+                      "type": "string"
+                    },
+                    "modified": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "published",
+                    "modified",
+                    "summary"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "parameters"
+              ]
+            }
+          ]
+        },
+        "references": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "vendor": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "vendor",
+                "url"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "description",
+        "references"
+      ]
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "cpe2.2": {
+                          "type": "string"
+                        },
+                        "cpe2.3": {
+                          "type": "string"
+                        },
+                        "version_affected": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string"
+                            },
+                            "to": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "from",
+                            "to"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "cpe2.2",
+                        "cpe2.3",
+                        "version_affected"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "running_on": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string"
+                                },
+                                "cpe2.2": {
+                                  "type": "string"
+                                },
+                                "cpe2.3": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "title",
+                                "cpe2.2",
+                                "cpe2.3"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "running_on"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "parameters"
+              ]
+            }
+          ]
+        },
+        "packages": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "vendor": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "affected": {
+                                  "type": "string"
+                                },
+                                "condition": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "affected",
+                                "condition"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "product"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "vendor"
+              ]
+            }
+          ]
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "class": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "relationship": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "attack_patterns": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "parameters": {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string"
+                                },
+                                "attack_methods": {
+                                  "type": "string"
+                                },
+                                "mitigations": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "title",
+                                "attack_methods",
+                                "mitigations",
+                                "url"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "parameters"
+                          ]
+                        }
+                      ]
+                    },
+                    "ranking": {
+                      "type": "object",
+                      "properties": {
+                        "categorization": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "title",
+                                    "url"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "parameters"
+                              ]
+                            }
+                          ]
+                        },
+                        "wasc": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "title",
+                                    "url"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "parameters"
+                              ]
+                            }
+                          ]
+                        },
+                        "attack": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "profile": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "tactic": {
+                                      "type": "string"
+                                    },
+                                    "permission_required": {
+                                      "type": "string"
+                                    },
+                                    "bypassed_defenses": {
+                                      "type": "string"
+                                    },
+                                    "data_sources": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    },
+                                    "file": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "profile",
+                                    "name",
+                                    "description",
+                                    "tactic",
+                                    "permission_required",
+                                    "bypassed_defenses",
+                                    "data_sources",
+                                    "url",
+                                    "file"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "parameters"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "categorization",
+                        "wasc",
+                        "attack"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "class",
+                    "title",
+                    "relationship",
+                    "url",
+                    "attack_patterns",
+                    "ranking"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "parameters"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "targets",
+        "packages",
+        "weaknesses"
+      ]
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "cvss": {
+          "type": "object",
+          "properties": {
+            "cvss2": {
+              "type": "object",
+              "properties": {
+                "vector": {
+                  "type": "string"
+                },
+                "base_score": {
+                  "type": "string"
+                },
+                "impact_score": {
+                  "type": "string"
+                },
+                "exploit_score": {
+                  "type": "string"
+                },
+                "access_vector": {
+                  "type": "string"
+                },
+                "access_complexity": {
+                  "type": "string"
+                },
+                "authentication": {
+                  "type": "string"
+                },
+                "confidentiality_impact": {
+                  "type": "string"
+                },
+                "integrity_impact": {
+                  "type": "string"
+                },
+                "availability_impact": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "vector",
+                "base_score",
+                "impact_score",
+                "exploit_score",
+                "access_vector",
+                "access_complexity",
+                "authentication",
+                "confidentiality_impact",
+                "integrity_impact",
+                "availability_impact"
+              ]
+            },
+            "cvss3": {
+              "type": "object",
+              "properties": {
+                "vector": {
+                  "type": "string"
+                },
+                "base_score": {
+                  "type": "string"
+                },
+                "impact_score": {
+                  "type": "string"
+                },
+                "exploit_score": {
+                  "type": "string"
+                },
+                "attack_vector": {
+                  "type": "string"
+                },
+                "attack_complexity": {
+                  "type": "string"
+                },
+                "privileges_required": {
+                  "type": "string"
+                },
+                "user_interaction": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "string"
+                },
+                "confidentiality_impact": {
+                  "type": "string"
+                },
+                "integrity_impact": {
+                  "type": "string"
+                },
+                "availability_impact": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "vector",
+                "base_score",
+                "impact_score",
+                "exploit_score",
+                "attack_vector",
+                "attack_complexity",
+                "privileges_required",
+                "user_interaction",
+                "score",
+                "confidentiality_impact",
+                "integrity_impact",
+                "availability_impact"
+              ]
+            }
+          },
+          "required": [
+            "cvss2",
+            "cvss3"
+          ]
+        }
+      },
+      "required": [
+        "cvss"
+      ]
+    },
+    "inspection": {
+      "type": "object",
+      "properties": {
+        "remote": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "file": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "family",
+                            "name",
+                            "file",
+                            "url"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "parameters"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "source"
+              ]
+            }
+          ]
+        },
+        "local": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "file": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "family",
+                            "name",
+                            "file",
+                            "url"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "parameters"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "source"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "remote",
+        "local"
+      ]
+    },
+    "exploitation": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "parameters": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "file": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "file",
+                        "url"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "parameters"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "source"
+          ]
+        }
+      ]
+    },
+    "defense": {
+      "type": "object",
+      "properties": {
+        "preventive": {
+          "type": "object",
+          "properties": {
+            "bulletins": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "vendor": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "parameters": {
+                              "type": "object",
+                              "properties": {
+                                "class": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "class",
+                                "url"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "parameters"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "vendor"
+                  ]
+                }
+              ]
+            },
+            "patches": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "vendor": {
+                      "type": "object",
+                      "properties": {
+                        "date_published": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "packages": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "package": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "product": {
+                                          "type": "string"
+                                        },
+                                        "version_fixed": {
+                                          "type": "string"
+                                        },
+                                        "version_not_fixed": {
+                                          "type": "string"
+                                        },
+                                        "status": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "product",
+                                        "version_fixed",
+                                        "version_not_fixed",
+                                        "status"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "package"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "date_published",
+                        "description",
+                        "packages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "vendor"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "bulletins",
+            "patches"
+          ]
+        },
+        "detective": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "class": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "class",
+                            "title",
+                            "url"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "parameters"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "source"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "preventive",
+        "detective"
+      ]
+    }
+  },
+  "required": [
+    "information",
+    "classification",
+    "risk",
+    "inspection",
+    "exploitation",
+    "defense"
+  ]
+}

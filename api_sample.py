@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-
-# API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
-# Copyright (C) 2013 - 2019 vFeed IO
+# API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
+# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
 
 import json
 
@@ -13,7 +12,6 @@ from core.Information import Information
 info = Information(cve).get_info()
 # printing the response (by default in JSON)
 print(info)
-
 
 # now printing only Idenfitier or any other specific key
 # first we load the response with json.loads
@@ -51,12 +49,14 @@ targets = json.loads(targets)
 
 # looking for a specific target CPE Windows server 2012
 
-for i in range(0, len(targets['targets'])):
+print(targets)
 
-    if "cpe:/o:microsoft:windows_server_2012:" in targets['targets'][i]['cpe2.2']:
-        print(targets['targets'][i]['title'])
-        print(targets['targets'][i]['cpe2.2'])
-        print(targets['targets'][i]['cpe2.3'])
+# for i in range(0, len(targets['targets'])):
+#
+#     if "cpe:/o:microsoft:windows_server_2012:" in targets['targets'][i]['parameters']['cpe2.2']:
+#         print(targets['targets'][i]['title'])
+#         print(targets['targets'][i]['cpe2.2'])
+#         print(targets['targets'][i]['cpe2.3'])
 
 # loading a vulnerability weakeness
 weaknesses = Classification(cve).get_weaknesses()
@@ -92,14 +92,21 @@ for key in data['exploitation']:
             params = value['parameters']
             print(params['file'])
 
-# Enumerating only preventive info (patches, bugs, fixes ....)
+# Enumerating only preventive info (bugs, fixes ....)
 from core.Defense import Preventive
 
 cve = "CVE-2017-5638"
 advisory = Preventive(cve).get_advisory()
 print(advisory)
 
-# Listing only detectinve (IPS, IDS rules + other cool sources)
+# loading a vulnerability patching / packages
+from core.Defense import Preventive
+
+cve = "CVE-2011-3597"
+patches = Preventive(cve).get_patches()
+print(patches)
+
+# Listing only detective (IPS, IDS rules + other cool sources)
 from core.Defense import Detective
 
 cve = "CVE-2017-5638"
@@ -118,7 +125,6 @@ cve = "CVE-2017-0199"
 from core.Export import Export
 
 Export(cve).dump_json()
-
 
 # search module
 from lib.Search import Search
@@ -142,4 +148,4 @@ print(Search(cwe).search_cwe())
 # update module
 from lib.Update import Update
 
-#Update().update()
+Update().update()

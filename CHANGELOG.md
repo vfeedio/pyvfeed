@@ -1,13 +1,30 @@
 ## Changelog
 
-Python 3.x API for the next generation of the vFeed Vulnerability and Threat Database.
+### 1.1.0
+
+* New feature "Common Patch Format" introduced. The `Defense` class has been updated to reflect a new method `get_patches` 
+  has been added. This method will enhance the methods already implemented in the past `get_advisory`. This new method 
+  will return the source(vendor), description, date of release, product, package, version fixed, version not fixed, status. 
+  For this first introduction, the CPF supports the packages from Ubuntu. Current January 2021, we will start adding 
+  support to Debian, Redhat, Fedora, Cisco, Suse (OpenSuse), Gentoo, Microsoft etc.
+  
+* Updated the JSON schema to reflect the new feature CPF (Common Patch Format) addition. As a result, the `Preventive` 
+  tag has been modified. Data with vulnerable packages & patches will be packed under `patches` tag & data with bulletins,
+  bugs will be under `bulletins` tag.
+  
+* Updated `Classification` class to better restructure data under `targets / packages`. The enumeration is better 
+  organized to list vendor, product & affected packages.
+  
+* Updated the JSON schema to version 1.2 to reflect the changes.
+  
+* Regenerate the whole vFeed Professional Vulnerability Database alongside 'Sync & Use' private Github repositories.
 
 ### 1.0.0
 
 * Updated `Classification` class to reflect the changes made in `capec_db` table following the update to version 3.2.
     * As a result, several `MITRE ATT&CK` identifiers has been added to the database. 
     
-* Regenerate the whole vFeed Professional Vulnerability Database alonside 'Sync & Use' private Github repositories.
+* Regenerate the whole vFeed Professional Vulnerability Database alongside 'Sync & Use' private Github repositories.
 
 
 ### 0.9.9

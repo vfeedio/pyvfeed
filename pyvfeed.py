@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-
-# API Python wrapper for The Next Generation Vulnerability & Threat Intelligence Database  - https://vfeed.io
-# Copyright (C) 2013 - 2019 vFeed IO
+# API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
+# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
 
 import sys
 import argparse
@@ -62,27 +61,20 @@ if __name__ == "__main__":
 
     if args.information:
         id = args.information[0]
-        # print(Information(id).get_info())
-        # print(Information(id).get_references())
         print(Information(id).get_all())
 
     if args.classification:
         id = args.classification[0]
-        #print(Classification(id).get_weaknesses())
-        #print(Classification(id).get_targets())
+        from core.Classification import Classification
         #print(Classification(id).get_packages())
         print(Classification(id).get_all())
 
     if args.risk:
         id = args.risk[0]
         print(Risk(id).get_cvss())
-        # print(Risk(id).get_cvss2())
-        # print(Risk(id).get_cvss3())
 
     if args.inspection:
         id = args.inspection[0]
-        # print(Inspection(id).get_local())
-        # print(Inspection(id).get_remote())
         print(Inspection(id).get_all())
 
     if args.exploitation:
@@ -91,8 +83,6 @@ if __name__ == "__main__":
 
     if args.defense:
         id = args.defense[0]
-        # print(Preventive(id).get_advisory())
-        # print(Detective(id).get_rules())
         print(Defense(id).get_all())
 
     if args.export:

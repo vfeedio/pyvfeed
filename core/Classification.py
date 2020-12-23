@@ -282,17 +282,16 @@ class Classification(object):
         # init local list
         response = []
 
-        self.cur.execute(
-            "SELECT product FROM packages_db WHERE vendor = '{0}' and cve_id=? group by product".format(vendor),
-            self.query)
+        self.cur.execute('''SELECT product FROM packages_db WHERE vendor="%s" and cve_id="%s" group by product''' % (
+            vendor, self.query[0]))
 
         for product in self.cur.fetchall():
             product = product[0].strip()
 
             if product:
                 self.cur.execute(
-                    "SELECT DISTINCT version_affected, affected_condition FROM packages_db WHERE product = '{0}' and "
-                    "cve_id=? ".format(product), self.query)
+                    '''SELECT DISTINCT version_affected, affected_condition FROM packages_db WHERE product="%s" and 
+                    cve_id="%s" ''' % (product, self.query[0]))
 
                 datas = self.cur.fetchall()
 

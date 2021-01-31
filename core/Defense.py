@@ -77,7 +77,7 @@ class Preventive(object):
                     "SELECT DISTINCT date_published, description, product,version_fixed, version_not_fixed, "
                     "fix_status FROM "
                     "patches_db WHERE "
-                    "package = '{0}' and cve_id=? ".format(package), self.query)
+                    "package = '%s' AND source = '%s' AND cve_id = '%s'" % (package, source, self.query[0]))
 
                 datas = self.cur.fetchall()
 

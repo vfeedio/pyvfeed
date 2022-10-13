@@ -4,7 +4,7 @@
 
 * Added support to `EPSS` - Exploit Prediction Scoring System. 
 * Added support to `CISA` Known Exploited Vulnerability Catalog (KEV).
-* 3 new methods added `risk`:
+* 3 new methods added under `risk` tag:
   * `get_kev` : to retrieve information of Know Exploited Vulnerability if available
   * `get_epss`: to retrieve `probability` and `percentile` information related to CVE.
   * `get_risk` : to enlist the whole information related to risks such as `cvss`, `epss` and `kev`

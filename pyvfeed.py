@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
-# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
+# Copyright (C) 2013 - 2022 vFeed, Inc. - https://vfeed.io
 
 import sys
 import argparse
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
     if args.risk:
         id = args.risk[0]
-        print(Risk(id).get_cvss())
+        print(Risk(id).get_risk())
 
     if args.inspection:
         id = args.inspection[0]

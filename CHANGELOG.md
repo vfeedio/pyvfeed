@@ -1,5 +1,21 @@
 ## Changelog
 
+### 1.2.0
+
+* Added support to `EPSS` - Exploit Prediction Scoring System. 
+* Added support to `CISA` Known Exploited Vulnerability Catalog (KEV).
+* 3 new methods added `risk`:
+  * `get_kev` : to retrieve information of Know Exploited Vulnerability if available
+  * `get_epss`: to retrieve `probability` and `percentile` information related to CVE.
+  * `get_risk` : to enlist the whole information related to risks such as `cvss`, `epss` and `kev`
+* Updated the JSON schema to reflect the new EPSS addition. As a result, the `risk` 
+  tag has been modified. 2 new indicators `epss` and `kev` has been added. With each comes a set of information. Please refer to the documentation.
+* Update `CAPEC` to version 3.8.
+* Enhanced the mapping to MITRE ATT&CK initiative. 
+* Regenerate the whole vFeed Professional Vulnerability Database alongside 'Sync & Use' private Github repositories.
+* Documentation updated.
+
+
 ### 1.1.0
 
 * New feature "Common Patch Format" introduced. The `Defense` class has been updated to reflect a new method `get_patches` 

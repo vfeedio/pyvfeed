@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
-# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
+# Copyright (C) 2013 - 2022 vFeed, Inc. - https://vfeed.io
 
 import json
 
@@ -29,7 +29,7 @@ class Export(object):
         # loading data
         response = json.loads(Information(self.id).get_all())
         classification = json.loads(Classification(self.id).get_all())
-        risk = json.loads(Risk(self.id).get_cvss())
+        risk = json.loads(Risk(self.id).get_risk())
         inspection = json.loads(Inspection(self.id).get_all())
         exploitation = json.loads(Exploitation(self.id).get_exploits())
         defense = json.loads(Defense(self.id).get_all())

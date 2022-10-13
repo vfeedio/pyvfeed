@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
-# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
+# Copyright (C) 2013 - 2022 vFeed, Inc. - https://vfeed.io
 
 import json
 
@@ -13,6 +13,59 @@ class Risk(object):
         """ init """
         self.id = id
         (self.cur, self.query) = Database(self.id).db_init()
+
+    def get_kev_cisa(self):
+        """ callable method - return CISA KEV Catalog"""
+        # init
+        response = {}
+
+        # getting cvss data
+        self.cur.execute('SELECT * FROM kev_cisa_db WHERE cve_id=?', self.query)
+        self.datas = self.cur.fetchall()
+
+        for data in self.datas:
+            # setting cvss2 vectors
+            self.kev_id = data[0]
+            self.date_added = data[1]
+            self.date_due = data[2]
+            self.vuln_name = data[3]
+            self.vendor = data[4]
+            self.product = data[5]
+            self.action = data[6]
+            self.url = data[7]
+
+            # format the response
+            response = {"id": self.kev_id,
+                        "parameters": {"date_added": self.date_added, "date_due": self.date_due,
+                                       "name": self.vuln_name, "vendor": self.vendor,
+                                       "product": self.product, "required_action": self.action,
+                                       "url": self.url}}
+
+        # adding the appropriate tag.
+        response = {"kev": response}
+
+        return utility.serialize_data(response)
+
+    def get_epss(self):
+        """ callable method - return EPSS scoring"""
+        # init
+        response = {}
+
+        # getting cvss data
+        self.cur.execute('SELECT * FROM epss_scoring WHERE cve_id=?', self.query)
+        self.datas = self.cur.fetchall()
+
+        for data in self.datas:
+            # setting cvss2 vectors
+            self.epss_probability = data[0]
+            self.percentile_rank = data[1]
+
+            response = {"probability": self.epss_probability, "percentile": self.percentile_rank}
+
+        # adding the appropriate tag.
+        response = {"epss": response}
+
+        return utility.serialize_data(response)
 
     def get_cvss2(self):
         """ callable method - return  CVSS 2 score"""
@@ -99,6 +152,19 @@ class Risk(object):
         cvss_2.update(cvss_3)
 
         # formatting the response
-        response = {"risk": {"cvss": cvss_2}}
+        response = {"cvss": cvss_2}
+
+        return utility.serialize_data(response)
+
+    def get_risk(self):
+        """ callable method - return all risks"""
+        response = json.loads(Risk(self.id).get_cvss())
+        epss = json.loads(Risk(self.id).get_epss())
+        kev_cisa = json.loads(Risk(self.id).get_kev_cisa())
+
+        # formatting the response
+        response.update(epss)
+        response.update(kev_cisa)
+        response = {"risk": response}
 
         return utility.serialize_data(response)

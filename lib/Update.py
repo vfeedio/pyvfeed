@@ -48,19 +48,18 @@ class Update(object):
 
             if not os.path.isfile(self.local_db):
                 print("[+] Deploying new database ...")
-                self.download(self.remote_db)
+                self.download(self.remote_db, True)
                 self.unpack_database()
-
             else:
                 print("[+] Checking update status ...")
-                self.download(self.update_file)
-                self.check_status(self.update_file)
+                self.download(self.update_file, False)
+                self.check_status(self.update_file, False)
 
         except Exception as e:
             response = utility.serialize_error(False, str(e), str(e))
             sys.exit(response)
 
-    def check_status(self, file):
+    def check_status(self, file, newdb):
         """ check if new db is available"""
 
         # set the target file
@@ -79,27 +78,62 @@ class Update(object):
 
                 else:
                     print("\t[-] Database update available")
-                    self.download(self.remote_db)
-                    self.unpack_database()
+                    result = self.download(self.remote_db, newdb)
+                    if result:
+                        self.unpack_database()
 
         except Exception as e:
             response = utility.serialize_error(False, str(e), str(e))
             sys.exit(response)
 
-    def download(self, file):
-        """ download files"""
+    def has_s3_object_changed(self, s3key, local_path):
+        """
+        check if given S3 key changed compared to local file
 
-        print("\t[-] Downloading", file)
+        Returns: True if latest, False otherwise
+        """
+        obj = self.bucket.Object(s3key)
+
+        try:
+            # get object metadata
+            obj.load()
+            remote_last_modified = obj.last_modified.timestamp()
+
+            if os.path.exists(local_path):
+                local_mtime = os.path.getmtime(local_path)
+                if remote_last_modified <= local_mtime:
+                    return False
+            return True
+        except ClientError as e:
+            print(f"Error: {e}")
+            return False
+
+    def download(self, file, newdb):
+        """ check if download needed, and download files """
 
         # set the target file
         self.target = os.path.join(self.path, file)
 
         try:
-            self.bucket.download_file(file, self.target)
+            if newdb:
+                self.bucket.download_file(file, self.target)
+                print(f"\t[-] Downloading new DB file '{file}'")
+                return True
 
+            # existing DB
+            print(f"\t[-] Checking if remote download needed for '{file}'")
+            changed = self.has_s3_object_changed(file, self.target)
+            if changed:
+                self.bucket.download_file(file, self.target)
+                print(f"\t[-] Downloading update file '{file}'")
+            else:
+                print(f"\t[-] Skip downloading file '{file}'")
+                return False
         except Exception as e:
             response = utility.serialize_error(False, str(e), str(e))
             sys.exit(response)
+            return False
+        return True
 
     def unpack_database(self):
         """ extract database """

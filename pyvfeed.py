@@ -12,6 +12,7 @@ try:
     from core.Risk import Risk
     from lib.Update import Update
     from lib.Search import Search
+    from lib.Lang import Lang
     from core.Export import Export
     from core.Defense import Defense
     from lib.Version import APIversion
@@ -45,6 +46,9 @@ if __name__ == "__main__":
     parser.add_argument("--search", metavar="cve|cpe|cwe", type=str,
                         help="Search for CVE, CPE2.2 | CPE2.3 or CWE",
                         nargs=2)
+    parser.add_argument("--lang", metavar="cpp | python | javascript | golang", type=str,
+                        help="List language vulnerabilities",
+                        nargs=1)
     parser.add_argument("--export", metavar="CVE, CPE", type=str, help="Export all metadata to JSON file",
                         nargs=1)
     parser.add_argument("--plugin", metavar="Plugin name", type=str, help="Load third party plugins",
@@ -97,6 +101,11 @@ if __name__ == "__main__":
 
         result = getattr(Search(id), type)
         print(result())
+
+    # language vulns
+    if args.lang:
+        id = args.lang[0]
+        print(Lang(id).search_lang())
 
     if args.plugin:
         plg_name = args.plugin[0]

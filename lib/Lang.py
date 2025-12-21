@@ -28,7 +28,7 @@ class Lang(object):
                 return "python:python"
             case "javascript" | "golang" | "java":
                 return lang
-        return ""
+        return lang
 
     def search_lang(self):
         """ list CVEs for languages """
@@ -41,7 +41,8 @@ class Lang(object):
             FROM cve_db
             LEFT JOIN cvss_scores ON cve_db.cve_id = cvss_scores.cve_id
             LEFT JOIN map_cpe_cve ON cve_db.cve_id = map_cpe_cve.cve_id
-            WHERE cve_db.summary LIKE '%{lang_summary}%' OR map_cpe_cve.cpe23_id LIKE '%{lang_cpe}%';
+            WHERE cve_db.summary LIKE '%{lang_summary}%' OR map_cpe_cve.cpe23_id LIKE '%{lang_cpe}%'
+            ORDER BY cve_db.cve_id DESC;
         """
         self.cur.execute(squery)
 

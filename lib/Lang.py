@@ -37,7 +37,7 @@ class Lang(object):
         lang_summary = self.id
         lang_cpe = self.get_lang_cpe(self.id)
         squery = f"""
-        SELECT cve_db.cve_id, cve_db.summary, cvss_scores.cvss3_access_vector, map_cpe_cve.cpe23_id
+        SELECT cve_db.cve_id, cve_db.summary, cvss_scores.cvss3_vector, map_cpe_cve.cpe23_id
             FROM cve_db
             LEFT JOIN cvss_scores ON cve_db.cve_id = cvss_scores.cve_id
             LEFT JOIN map_cpe_cve ON cve_db.cve_id = map_cpe_cve.cve_id
@@ -52,7 +52,7 @@ class Lang(object):
             responses.append({
                 "cve_id":  data[0],
                 "summary": data[1],
-                "cvss3_access_vector": data[2],
+                "cvss3_vector": data[2],
                 "cpe23_id": data[3],
             })
         return utility.serialize_data(responses)

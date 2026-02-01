@@ -13,6 +13,7 @@ try:
     from lib.Update import Update
     from lib.Search import Search
     from lib.Lang import Lang
+    from lib.Pkgs import Pkgs
     from core.Export import Export
     from core.Defense import Defense
     from lib.Version import APIversion
@@ -49,6 +50,9 @@ if __name__ == "__main__":
     parser.add_argument("--lang", metavar="cpp | python | javascript | golang", type=str,
                         help="List language vulnerabilities",
                         nargs=1)
+    parser.add_argument("--pkgs", metavar="<pkg> [version]", type=str,
+                        help="List affected packages (CPE) vulnerabilities for given package/versions",
+                        nargs="+")
     parser.add_argument("--export", metavar="CVE, CPE", type=str, help="Export all metadata to JSON file",
                         nargs=1)
     parser.add_argument("--plugin", metavar="Plugin name", type=str, help="Load third party plugins",
@@ -106,6 +110,11 @@ if __name__ == "__main__":
     if args.lang:
         id = args.lang[0]
         print(Lang(id).search_lang())
+
+    # pkgs affected vuln
+    if args.pkgs:
+        id = args.pkgs[0]
+        print(Pkgs(id).search_pkgs())
 
     if args.plugin:
         plg_name = args.plugin[0]

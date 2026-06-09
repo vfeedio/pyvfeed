@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
-# Copyright (C) 2013 - 2022 vFeed, Inc. - https://vfeed.io
+# Copyright (C) 2013 - 2026 Zetafence vFeed Threat Intelligence - https://vfeed.io
 
 import json
 
@@ -40,6 +40,21 @@ class Information(object):
             # format the response
             information = {"id": self.id, "parameters": {"published": data[1], "modified": data[2],
                                                          "summary": data[3]}}
+
+            # augment with cve_metadata if a row exists
+            self.cur.execute('SELECT * FROM cve_metadata WHERE cve_id=?', self.query)
+            meta = self.cur.fetchone()
+            if meta:
+                information["parameters"].update({
+                    "vuln_status":       meta[1],
+                    "source_identifier": meta[2],
+                    "has_exploits":      bool(meta[3]),
+                    "has_kev_cisa":      bool(meta[4]),
+                    "has_patches":       bool(meta[5]),
+                    "has_advisory":      bool(meta[6]),
+                    "risk_score":        meta[7],
+                })
+
             response.append(information)
 
         # set the tag

@@ -1,5 +1,25 @@
 ## Changelog
 
+### 2.0.0 (2026-06-08)
+
+* **CLI rewrite**: Fully modernized `pyvfeed.py` with grouped argparse arguments, separated `build_parser()` / `main()`, and robust DB resolution chain (`config.py` → `.pyvfeedrc` → `--db`).
+* **`--db FILE`**: New flag to override the SQLite3 DB path for a single run without touching config.
+* **`--set-dbfile FILE`**: Permanently saves the DB path to `.pyvfeedrc` (project directory) for all future runs.
+* **`--download-demo-db`**: Downloads the demo vFeed DB. Uses SHA-256 comparison against a remote `update` file to skip redundant downloads.
+* **`--schema`**: Prints all `CREATE TABLE` / `CREATE INDEX` statements from the SQLite3 DB to stdout.
+* **`--advisory CVE`**: Returns top advisory entries (configurable via `ADVISORY_LIMIT`) from `advisory_db` for a given CVE.
+* **`--mitre CVE`**: Returns CWE weaknesses and resolved MITRE ATT&CK techniques via the CVE → CWE → CAPEC → ATT&CK chain.
+* **CVSS 4.0 support**: All CVE outputs now include CVSS 4.0 scoring from `cvss4_scores` when an entry exists; omitted silently when absent.
+* **`cve_metadata` integration**: Triage flags (`vuln_status`, `source_identifier`, `has_exploits`, `has_kev_cisa`, `has_patches`, `has_advisory`, `risk_score`) appended to all CVE outputs when a `cve_metadata` row exists.
+* **`--lang`**: Language CVE listings enriched with CVSS 4.0 and `cve_metadata` fields via LEFT JOIN.
+* **`--pkgs`**: Package CVE listings enriched with CVSS 4.0 and `cve_metadata` fields via LEFT JOIN.
+* **`--version`**: Updated to build `2.0.0`; title updated to `Python CLI for vFeed Vulnerability and Threat Intelligence - Pro Edition`.
+* **Schema v2.0**: New `schema/schema-v2.0.json` extending v1.4 with `cvss4`, `epss`, `kev`, `cve_metadata` fields, `advisory`, `mitre`, and `lang` output shapes.
+* **Secure demo delivery**: Demo DB served via private S3 bucket with WAF rate-based rules for abuse protection.
+* **URL obfuscation**: Remote endpoint and key constants Base64-encoded in `lib/DemoUpdate.py`.
+* **Copyright updated**: All Python source files updated to `Zetafence vFeed Threat Intelligence 2013-2026`.
+* **README rewritten**: Covers quick start, demo DB download, `.pyvfeedrc` setup, DB override, all query commands with JSON examples, search, lang, pkgs, configuration, and full help output.
+
 ### 1.2.0
 
 * Added support to `EPSS` - Exploit Prediction Scoring System. 

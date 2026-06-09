@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
-# Copyright (C) 2013 - 2022 vFeed, Inc. - https://vfeed.io
+# Copyright (C) 2013 - 2026 Zetafence vFeed Threat Intelligence - https://vfeed.io
 
 import json
 
@@ -144,12 +144,66 @@ class Risk(object):
 
         return utility.serialize_data(response)
 
+    def get_cvss4(self):
+        """ callable method - return CVSS 4 score """
+
+        # init
+        response = {}
+
+        self.cur.execute('SELECT * FROM cvss4_scores WHERE cve_id=?', self.query)
+        self.datas = self.cur.fetchall()
+
+        for data in self.datas:
+            response = {
+                "vector":                               data[0],
+                "base_score":                           data[1],
+                "attack_vector":                        data[2],
+                "attack_complexity":                    data[3],
+                "attack_requirements":                  data[4],
+                "privileges_required":                  data[5],
+                "user_interaction":                     data[6],
+                "vuln_confidentiality_impact":          data[7],
+                "vuln_integrity_impact":                data[8],
+                "vuln_availability_impact":             data[9],
+                "sub_confidentiality_impact":           data[10],
+                "sub_integrity_impact":                 data[11],
+                "sub_availability_impact":              data[12],
+                "exploit_maturity":                     data[13],
+                "confidentiality_requirement":          data[14],
+                "integrity_requirement":                data[15],
+                "availability_requirement":             data[16],
+                "modified_attack_vector":               data[17],
+                "modified_attack_complexity":           data[18],
+                "modified_attack_requirements":         data[19],
+                "modified_privileges_required":         data[20],
+                "modified_user_interaction":            data[21],
+                "modified_vuln_confidentiality_impact": data[22],
+                "modified_vuln_integrity_impact":       data[23],
+                "modified_vuln_availability_impact":    data[24],
+                "modified_sub_confidentiality_impact":  data[25],
+                "modified_sub_integrity_impact":        data[26],
+                "modified_sub_availability_impact":     data[27],
+                "safety":                               data[28],
+                "automatable":                          data[29],
+                "recovery":                             data[30],
+                "value_density":                        data[31],
+                "vulnerability_response_effort":        data[32],
+                "provider_urgency":                     data[33],
+            }
+
+        response = {"cvss4": response}
+
+        return utility.serialize_data(response)
+
     def get_cvss(self):
-        """ callable method - return both CVSS 2 and 3 scores"""
+        """ callable method - return CVSS 2, 3 and 4 scores"""
 
         cvss_2 = json.loads(self.get_cvss2())
         cvss_3 = json.loads(self.get_cvss3())
+        cvss_4 = json.loads(self.get_cvss4())
         cvss_2.update(cvss_3)
+        if cvss_4.get("cvss4"):
+            cvss_2.update(cvss_4)
 
         # formatting the response
         response = {"cvss": cvss_2}

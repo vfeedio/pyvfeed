@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # API Python wrapper for The Vulnerability & Threat Intelligence Feed Service
-# Copyright (C) 2013 - 2020 vFeed, Inc. - https://vfeed.io
+# Copyright (C) 2013 - 2026 Zetafence vFeed Threat Intelligence - https://vfeed.io
 
 import json
 
@@ -21,13 +21,11 @@ class Lang(object):
         """ given lang, return CPE id """
         if lang is None:
             return None
-        match str(lang).lower():
-            case "c++" | "cpp" :
-                return "glibc"
-            case "python":
-                return "python:python"
-            case "javascript" | "golang" | "java":
-                return lang
+        lang = str(lang).lower()
+        if lang in ("c++", "cpp"):
+            return "glibc"
+        if lang == "python":
+            return "python:python"
         return lang
 
     def search_lang(self):
@@ -37,10 +35,17 @@ class Lang(object):
         lang_summary = self.id
         lang_cpe = self.get_lang_cpe(self.id)
         squery = f"""
-        SELECT cve_db.cve_id, cve_db.summary, cvss_scores.cvss3_vector, map_cpe_cve.cpe23_id
+        SELECT cve_db.cve_id, cve_db.summary, cvss_scores.cvss3_vector, map_cpe_cve.cpe23_id,
+               cvss4_scores.cvss4_vector, cvss4_scores.cvss4_base,
+               cve_metadata.vuln_status, cve_metadata.source_identifier,
+               cve_metadata.has_exploits, cve_metadata.has_kev_cisa,
+               cve_metadata.has_patches, cve_metadata.has_advisory,
+               cve_metadata.risk_score
             FROM cve_db
-            LEFT JOIN cvss_scores ON cve_db.cve_id = cvss_scores.cve_id
-            LEFT JOIN map_cpe_cve ON cve_db.cve_id = map_cpe_cve.cve_id
+            LEFT JOIN cvss_scores   ON cve_db.cve_id = cvss_scores.cve_id
+            LEFT JOIN cvss4_scores  ON cve_db.cve_id = cvss4_scores.cve_id
+            LEFT JOIN map_cpe_cve   ON cve_db.cve_id = map_cpe_cve.cve_id
+            LEFT JOIN cve_metadata  ON cve_db.cve_id = cve_metadata.cve_id
             WHERE cve_db.summary LIKE '%{lang_summary}%' OR map_cpe_cve.cpe23_id LIKE '%{lang_cpe}%'
             ORDER BY cve_db.cve_id DESC;
         """
@@ -49,10 +54,26 @@ class Lang(object):
         # fetch all data and iterate through
         responses = []
         for data in self.cur.fetchall():
-            responses.append({
-                "cve_id":  data[0],
-                "summary": data[1],
+            entry = {
+                "cve_id":       data[0],
+                "summary":      data[1],
                 "cvss3_vector": data[2],
-                "cpe23_id": data[3],
-            })
+                "cpe23_id":     data[3],
+            }
+            if data[4]:
+                entry["cvss4_vector"] = data[4]
+            if data[5]:
+                entry["cvss4_base"] = data[5]
+            # include cve_metadata fields only when a row exists (vuln_status not NULL)
+            if data[6] is not None:
+                entry.update({
+                    "vuln_status":       data[6],
+                    "source_identifier": data[7],
+                    "has_exploits":      bool(data[8]),
+                    "has_kev_cisa":      bool(data[9]),
+                    "has_patches":       bool(data[10]),
+                    "has_advisory":      bool(data[11]),
+                    "risk_score":        data[12],
+                })
+            responses.append(entry)
         return utility.serialize_data(responses)

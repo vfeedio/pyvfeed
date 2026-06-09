@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyvfeed"
+version = "2.0.2"
+description = "Python CLI for vFeed Vulnerability and Threat Intelligence"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "vFeed", email = "support@vfeed.io" }]
+requires-python = ">=3.8"
+dependencies = [
+    "boto3>=1.35",
+    "pyyaml>=6.0",
+]
+keywords = ["vulnerability", "cve", "threat-intelligence", "cvss", "security"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+]
+
+[project.scripts]
+pyvfeed = "pyvfeed:main"
+
+[project.urls]
+Homepage = "https://github.com/vfeedio/pyvfeed"
+
+[tool.setuptools]
+py-modules = ["pyvfeed"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["common*", "core*", "lib*"]
+
+[tool.setuptools.package-data]
+"*" = ["schema/*.json"]

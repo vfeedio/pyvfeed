@@ -1,0 +1,991 @@
+{
+  "$schema": "vFeed,Inc Vulnerability Feed JSON schema v2.0",
+  "type": "object",
+  "properties": {
+    "information": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "published": {
+                      "type": "string"
+                    },
+                    "modified": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "vuln_status": {
+                      "type": "string",
+                      "description": "NVD vulnerability status (e.g. Analyzed, Awaiting Analysis)"
+                    },
+                    "source_identifier": {
+                      "type": "string",
+                      "description": "CNA or organization that assigned the CVE"
+                    },
+                    "has_exploits": {
+                      "type": "boolean"
+                    },
+                    "has_kev_cisa": {
+                      "type": "boolean"
+                    },
+                    "has_patches": {
+                      "type": "boolean"
+                    },
+                    "has_advisory": {
+                      "type": "boolean"
+                    },
+                    "risk_score": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "references": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "vendor": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "cpe2.2": {
+                          "type": "string"
+                        },
+                        "cpe2.3": {
+                          "type": "string"
+                        },
+                        "version_affected": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string"
+                            },
+                            "to": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "running_on": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string"
+                                },
+                                "cpe2.2": {
+                                  "type": "string"
+                                },
+                                "cpe2.3": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "packages": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "vendor": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "affected": {
+                                  "type": "string"
+                                },
+                                "condition": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "class": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "relationship": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "attack_patterns": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "parameters": {
+                              "type": "object",
+                              "properties": {
+                                "title": {
+                                  "type": "string"
+                                },
+                                "attack_methods": {
+                                  "type": "string"
+                                },
+                                "mitigations": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "ranking": {
+                      "type": "object",
+                      "properties": {
+                        "categorization": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "wasc": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "title": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "attack": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "profile": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "tactic": {
+                                      "type": "string"
+                                    },
+                                    "permission_required": {
+                                      "type": "string"
+                                    },
+                                    "bypassed_defenses": {
+                                      "type": "string"
+                                    },
+                                    "data_sources": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    },
+                                    "file": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "cvss": {
+          "type": "object",
+          "properties": {
+            "cvss2": {
+              "type": "object",
+              "properties": {
+                "vector": {
+                  "type": "string"
+                },
+                "base_score": {
+                  "type": "string"
+                },
+                "impact_score": {
+                  "type": "string"
+                },
+                "exploit_score": {
+                  "type": "string"
+                },
+                "access_vector": {
+                  "type": "string"
+                },
+                "access_complexity": {
+                  "type": "string"
+                },
+                "authentication": {
+                  "type": "string"
+                },
+                "confidentiality_impact": {
+                  "type": "string"
+                },
+                "integrity_impact": {
+                  "type": "string"
+                },
+                "availability_impact": {
+                  "type": "string"
+                }
+              }
+            },
+            "cvss3": {
+              "type": "object",
+              "properties": {
+                "vector": {
+                  "type": "string"
+                },
+                "base_score": {
+                  "type": "string"
+                },
+                "impact_score": {
+                  "type": "string"
+                },
+                "exploit_score": {
+                  "type": "string"
+                },
+                "attack_vector": {
+                  "type": "string"
+                },
+                "attack_complexity": {
+                  "type": "string"
+                },
+                "privileges_required": {
+                  "type": "string"
+                },
+                "user_interaction": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "string"
+                },
+                "confidentiality_impact": {
+                  "type": "string"
+                },
+                "integrity_impact": {
+                  "type": "string"
+                },
+                "availability_impact": {
+                  "type": "string"
+                }
+              }
+            },
+            "cvss4": {
+              "type": "object",
+              "description": "Present only when a cvss4_scores entry exists for the CVE",
+              "properties": {
+                "vector": {
+                  "type": "string"
+                },
+                "base_score": {
+                  "type": "string"
+                },
+                "attack_vector": {
+                  "type": "string"
+                },
+                "attack_complexity": {
+                  "type": "string"
+                },
+                "attack_requirements": {
+                  "type": "string"
+                },
+                "privileges_required": {
+                  "type": "string"
+                },
+                "user_interaction": {
+                  "type": "string"
+                },
+                "vuln_confidentiality_impact": {
+                  "type": "string"
+                },
+                "vuln_integrity_impact": {
+                  "type": "string"
+                },
+                "vuln_availability_impact": {
+                  "type": "string"
+                },
+                "sub_confidentiality_impact": {
+                  "type": "string"
+                },
+                "sub_integrity_impact": {
+                  "type": "string"
+                },
+                "sub_availability_impact": {
+                  "type": "string"
+                },
+                "exploit_maturity": {
+                  "type": "string"
+                },
+                "confidentiality_requirement": {
+                  "type": "string"
+                },
+                "integrity_requirement": {
+                  "type": "string"
+                },
+                "availability_requirement": {
+                  "type": "string"
+                },
+                "modified_attack_vector": {
+                  "type": "string"
+                },
+                "modified_attack_complexity": {
+                  "type": "string"
+                },
+                "modified_attack_requirements": {
+                  "type": "string"
+                },
+                "modified_privileges_required": {
+                  "type": "string"
+                },
+                "modified_user_interaction": {
+                  "type": "string"
+                },
+                "modified_vuln_confidentiality_impact": {
+                  "type": "string"
+                },
+                "modified_vuln_integrity_impact": {
+                  "type": "string"
+                },
+                "modified_vuln_availability_impact": {
+                  "type": "string"
+                },
+                "modified_sub_confidentiality_impact": {
+                  "type": "string"
+                },
+                "modified_sub_integrity_impact": {
+                  "type": "string"
+                },
+                "modified_sub_availability_impact": {
+                  "type": "string"
+                },
+                "safety": {
+                  "type": "string"
+                },
+                "automatable": {
+                  "type": "string"
+                },
+                "recovery": {
+                  "type": "string"
+                },
+                "value_density": {
+                  "type": "string"
+                },
+                "vulnerability_response_effort": {
+                  "type": "string"
+                },
+                "provider_urgency": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "epss": {
+          "type": "object",
+          "properties": {
+            "probability": {
+              "type": "string"
+            },
+            "percentile": {
+              "type": "string"
+            }
+          }
+        },
+        "kev": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "date_added": {
+                  "type": "string"
+                },
+                "date_due": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "vendor": {
+                  "type": "string"
+                },
+                "product": {
+                  "type": "string"
+                },
+                "required_action": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "inspection": {
+      "type": "object",
+      "properties": {
+        "remote": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "file": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "local": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "family": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "file": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "exploitation": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "parameters": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "file": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "defense": {
+      "type": "object",
+      "properties": {
+        "preventive": {
+          "type": "object",
+          "properties": {
+            "bulletins": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "vendor": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "parameters": {
+                              "type": "object",
+                              "properties": {
+                                "class": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "patches": {
+              "type": ["array", "null"],
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "vendor": {
+                      "type": "object",
+                      "properties": {
+                        "date_published": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "packages": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "package": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "product": {
+                                          "type": "string"
+                                        },
+                                        "version_fixed": {
+                                          "type": "string"
+                                        },
+                                        "version_not_fixed": {
+                                          "type": "string"
+                                        },
+                                        "status": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "detective": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "parameters": {
+                          "type": "object",
+                          "properties": {
+                            "class": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "lang": {
+      "type": "array",
+      "description": "Language vulnerability search results (--lang)",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "cve_id": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "cvss3_vector": {
+              "type": "string"
+            },
+            "cpe23_id": {
+              "type": "string"
+            },
+            "cvss4_vector": {
+              "type": "string",
+              "description": "Present only when a cvss4_scores entry exists for the CVE"
+            },
+            "cvss4_base": {
+              "type": "string",
+              "description": "Present only when a cvss4_scores entry exists for the CVE"
+            },
+            "vuln_status": {
+              "type": "string",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            },
+            "source_identifier": {
+              "type": "string",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            },
+            "has_exploits": {
+              "type": "boolean",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            },
+            "has_kev_cisa": {
+              "type": "boolean",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            },
+            "has_patches": {
+              "type": "boolean",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            },
+            "has_advisory": {
+              "type": "boolean",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            },
+            "risk_score": {
+              "type": "number",
+              "description": "Present only when a cve_metadata entry exists for the CVE"
+            }
+          }
+        }
+      ]
+    },
+    "advisory": {
+      "type": "array",
+      "description": "Advisory entries for a given CVE (--advisory)",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "link": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "mitre": {
+      "type": "object",
+      "description": "MITRE CWE weaknesses and ATT&CK techniques for a given CVE (--mitre)",
+      "properties": {
+        "cve_id": {
+          "type": "string"
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "cwe_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "class": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "attack_techniques": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "profile": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "tactic": {
+                          "type": "string"
+                        },
+                        "permission_required": {
+                          "type": "string"
+                        },
+                        "bypassed_defenses": {
+                          "type": "string"
+                        },
+                        "data_sources": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "file": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -46,11 +46,11 @@ class Export(object):
     def dump_json(self):
         """ callable method - export to JSON  """
 
-        # create json file
-        utility.create_json(self.load_data(), self.json_file)
+        dest = utility.create_json(self.load_data(), self.json_file)
+        print(f"[+] Exported {self.id} to {dest}")
 
     def dump_yaml(self):
         """ callable method - export to YAML  """
 
-        # create yaml file
-        utility.create_yaml(self.load_data(), self.yaml_file)
+        dest = utility.create_yaml(self.load_data(), self.yaml_file)
+        print(f"[+] Exported {self.id} to {dest}")

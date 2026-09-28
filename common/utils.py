@@ -49,34 +49,34 @@ def check_file(file):
         return True, reason
 
 
+def _resolve_export_path():
+    """Return cwd if writable, otherwise fall back to configured export path."""
+    cwd = os.getcwd()
+    if os.access(cwd, os.W_OK):
+        return cwd
+    return export_path
+
+
 def create_json(response, file):
     """ create and move JSON file to the export repository"""
 
-    output_file = open(file, "w")
-    dest_file = os.path.join(export_path, file)
-    json.dump(response, output_file, indent=2)
+    out_dir = _resolve_export_path()
+    dest_file = os.path.join(out_dir, file)
+    with open(dest_file, "w") as output_file:
+        json.dump(response, output_file, indent=2)
 
-    if os.path.exists(dest_file):
-        os.remove(dest_file)
-
-    shutil.move(file, export_path)
-
-    return
+    return dest_file
 
 
 def create_yaml(response, file):
     """ create and move YAML file to the export repository"""
 
-    output_file = open(file, "w")
-    dest_file = os.path.join(export_path, file)
-    yaml.dump(response, output_file, default_flow_style=False, allow_unicode=True)
+    out_dir = _resolve_export_path()
+    dest_file = os.path.join(out_dir, file)
+    with open(dest_file, "w") as output_file:
+        yaml.dump(response, output_file, default_flow_style=False, allow_unicode=True)
 
-    if os.path.exists(dest_file):
-        os.remove(dest_file)
-
-    shutil.move(file, export_path)
-
-    return
+    return dest_file
 
 
 def serialize_error(success, object, reason):

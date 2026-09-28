@@ -3,5 +3,5 @@
 # Copyright (C) 2013 - 2026 Zetafence vFeed Threat Intelligence - https://vfeed.io
 
 __title__ = "Python CLI for vFeed Vulnerability and Threat Intelligence - Pro Edition"
-__version__ = "2.0.2"
+__version__ = "2.0.4"
 __email__ = "support@vfeed.io"

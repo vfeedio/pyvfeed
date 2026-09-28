@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyvfeed"
-version = "2.0.2"
+version = "2.0.4"
 description = "Python CLI for vFeed Vulnerability and Threat Intelligence"
 readme = "README.md"
 license = "MIT"
